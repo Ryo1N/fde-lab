@@ -4,6 +4,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 from db import get_db_session
+from models import JobBoard
 
 app = FastAPI()
 
@@ -18,14 +19,19 @@ async def health():
     return {"database": "down"}
 
 
-
-
 app.mount("/app", StaticFiles(directory="frontend/dist"))
 @app.get("/")
 async def root():
   indexFilePath = os.path.join("frontend", "dist", "index.html")
   return FileResponse(path=indexFilePath, media_type="text/html")
 
+from models import JobBoard
+@app.get("/api/job-boards")
+async def api_job_boards():
+    with get_db_session() as session:
+       jobBoards = session.query(JobBoard).all()
+       return jobBoards
+    
 jobBoards = {
     "acme": [
         {
