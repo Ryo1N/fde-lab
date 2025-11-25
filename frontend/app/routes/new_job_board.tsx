@@ -1,14 +1,22 @@
-import { useFetcher } from "react-router";
+import { Form, Link, redirect, useFetcher } from "react-router";
 import type { Route } from "../+types/root";
 import { Field, FieldGroup, FieldLabel, FieldLegend } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 
-export default function Signup(_: Route.ComponentProps) {
-  let fetcher = useFetcher();
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData()
+  await fetch('/api/job-boards', {
+    method: 'POST',
+    body: formData,
+  })
+  return redirect('/job-boards')
+} 
+
+export default function NewJobBoardForm(_: Route.ComponentProps) {
   return (
     <div className="w-full max-w-md">
-      <fetcher.Form method="post">
+      <Form method="post" encType="multipart/form-data">
         <FieldGroup>
           <FieldLegend>Add New Job Board</FieldLegend>
           <Field>
@@ -37,12 +45,12 @@ export default function Signup(_: Route.ComponentProps) {
             <Field orientation="horizontal">
               <Button type="submit">Submit</Button>
               <Button variant="outline" type="button">
-                Cancel
+                <Link to="/job-boards">Cancel</Link>
               </Button>
             </Field>
           </div>
         </FieldGroup>
-      </fetcher.Form>
+      </Form>
     </div>
   );
 }
