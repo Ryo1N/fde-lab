@@ -7,7 +7,8 @@ export default [
     route("job-boards", "routes/job_boards.tsx"),
     route("job-boards/new", "routes/new_job_board.tsx"),
     route("job-boards/:jobBoardId/edit", "routes/update_job_board.tsx"),
-    route("job-boards/:jobBoardId/job-posts", "routes/job_posts.tsx")
+    route("job-boards/:jobBoardId/job-posts", "routes/job_posts.tsx"),
+    route("/job-posts/:jobPostId/application", "routes/new_job_post_application.tsx")
   ])
 ] satisfies RouteConfig;
 
