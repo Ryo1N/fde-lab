@@ -1,3 +1,4 @@
+import os
 from models import Base
 import pytest
 from sqlalchemy import create_engine
@@ -45,3 +46,24 @@ def client(db_session):
             yield test_client
     finally:
         app.dependency_overrides.clear()
+
+@pytest.fixture(scope="session", autouse=True)
+def set_test_environment_variables():
+    try:
+        os.environ["ADMIN_USERNAME"] = "admin"
+        os.environ["ADMIN_PASSWORD"] = "secret"
+        os.environ["DATABASE_URL"] = "https://example.com"
+        os.environ["SUPABASE_URL"] = "https://example.com"
+        os.environ["SUPABASE_KEY"] = "secret"
+        os.environ["PRODUCTION"] = "false"
+        os.environ["RESEND_API_KEY"] = "secret"
+        os.environ["OPENAI_API_KEY"] = "secret"
+    finally:
+        del os.environ["ADMIN_USERNAME"]
+        del os.environ["ADMIN_PASSWORD"]
+        del os.environ["DATABASE_URL"]
+        del os.environ["SUPABASE_URL"]
+        del os.environ["SUPABASE_KEY"]
+        del os.environ["PRODUCTION"]
+        del os.environ["OPENAI_API_KEY"]
+        del os.environ["RESEND_API_KEY"]
