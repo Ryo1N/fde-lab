@@ -10,7 +10,7 @@ pydantic-settings==2.12.0 # Configuration Settings
 alembic==1.17.2 # DB Migration Tool
 supabase==2.24.0 # File Storage
 
-testcontainers[postgres]==4.13.3 # PyTest Dependencies
+testcontainers==4.13.3 # PyTest Dependencies
 pytest==9.0.1 # Testing Tool
 
 httpx==0.28.1 # HTTP Client

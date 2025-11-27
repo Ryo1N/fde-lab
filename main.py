@@ -1,6 +1,6 @@
 import os
 from typing import Annotated, Optional
-from fastapi import BackgroundTasks, Request, Response, status, FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import BackgroundTasks, Depends, Request, Response, status, FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr, Field
@@ -8,7 +8,7 @@ from sqlalchemy import text
 from ai import evaluate_resume_with_ai
 from auth import AdminAuthzMiddleware, AdminSessionMiddleware, authenticate_admin, delete_admin_session
 from converter import extract_text_from_pdf_bytes
-from db import get_db_session
+from db import get_db, get_db_session
 from emailer import send_email
 from file_storage import upload_file
 from models import JobApplication, JobApplicationAIEvaluation, JobBoard, JobPost
@@ -18,13 +18,13 @@ app = FastAPI()
 app.add_middleware(AdminAuthzMiddleware)
 app.add_middleware(AdminSessionMiddleware)
 
+from sqlalchemy.orm import Session
 
 @app.get("/api/health")
-async def health():
+async def health(db: Session = Depends(get_db)):
   try:
-    with get_db_session() as session:
-        session.execute(text("SELECT 1"))
-        return {"database": "ok"}
+    db.execute(text("SELECT 1"))
+    return {"database": "ok"}
   except Exception as e:
     print(e)
     return {"database": "down"}
@@ -35,10 +35,9 @@ async def me(req: Request):
    return {"is_admin": req.state.is_admin}
 
 @app.get("/api/job-boards")
-async def api_job_boards():
-    with get_db_session() as session:
-       jobBoards = session.query(JobBoard).all()
-       return jobBoards
+async def api_job_boards(db: Session = Depends(get_db)):
+   jobBoards = db.query(JobBoard).all()
+   return jobBoards
 
 @app.get("/api/job-application-ai-evaluations")
 async def api_job_boards():

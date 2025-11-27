@@ -8,3 +8,11 @@ engine = create_engine(str(settings.DATABASE_URL), echo=not settings.PRODUCTION)
 def get_db_session():
   return sessionmaker(bind=engine)()
 
+def get_db():
+  db = sessionmaker(bind=engine)()
+  try:
+      yield db
+  finally:
+      db.close()
+
+
