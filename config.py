@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from pydantic import AnyUrl
+from typing import Optional
 
 class Settings(BaseSettings):
     DATABASE_URL: AnyUrl
@@ -11,6 +12,7 @@ class Settings(BaseSettings):
     RESEND_API_KEY: str
     OPENAI_API_KEY: str
     IS_CI: bool = False
+    TEST_DATABASE_URL: Optional[str] = None
 
     class Config:
         env_file = ".env"
