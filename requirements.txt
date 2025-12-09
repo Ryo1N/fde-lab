@@ -1,18 +1,19 @@
 fastapi[all]
 
-sqlalchemy==2.0.44 # Python - DB Layer Abstraction (ORM)
-psycopg2-binary==2.9.11 # Database Driver
-psycopg2==2.9.11 # Database Driver
+sqlalchemy>=2.0.44 # Python - DB Layer Abstraction (ORM)
+psycopg2-binary>=2.9.11 # Database Driver
+psycopg2>=2.9.11 # Database Driver
 
-pydantic==2.12.4 # Validation  
-pydantic-settings==2.12.0 # Configuration Settings
+pydantic>=2.12.4 # Validation  
+pydantic-settings>=2.11.0 # Configuration Settings
 
-alembic==1.17.2 # DB Migration Tool
-supabase==2.24.0 # File Storage
+alembic>=1.16.5 # DB Migration Tool
+supabase # File Storage
 
-testcontainers==4.13.3 # PyTest Dependencies
-pytest==9.0.1 # Testing Tool
+testcontainers # PyTest Dependencies
+pytest # Testing Tool
 
-httpx==0.28.1 # HTTP Client
-openai==2.8.1 # LLM
-PyPDF2==3.0.1 # PDF to Text
+httpx # HTTP Client
+openai # LLM
+PyPDF2 # PDF to Text
+openai-agents==0.6.2
