@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str
     IS_CI: bool = False
     TEST_DATABASE_URL: Optional[str] = None
+    BRAINTRUST_API_KEY: str
 
     class Config:
         env_file = ".env"

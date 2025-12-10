@@ -1,0 +1,170 @@
+[
+  {
+    "skill": "Python",
+    "question": "If `d` is a dictionary, then what does `d['name'] = 'Siddharta'` do?",
+    "answer": "It assigns the value 'Siddharta' to the key 'name' in the dictionary d.",
+    "correct": true
+  },
+  {
+    "skill": "Python",
+    "question": "If `d` is a dictionary, then what does `d['name'] = 'Siddharta'` do?",
+    "answer": "It creates a new list called name.",
+    "correct": false
+  },
+  {
+    "skill": "Python",
+    "question": "if `l1` is a list and `l2` is a list, then what is `l1 + l2`?",
+    "answer": "It concatenates the two lists into one new list.",
+    "correct": true
+  },
+  {
+    "skill": "Python",
+    "question": "if `l1` is a list and `l2` is a list, then what is `l1 + l2`?",
+    "answer": "It adds the numbers in both lists together.",
+    "correct": false
+  },
+  {
+    "skill": "Python",
+    "question": "How do you remove a key from a dictionary?",
+    "answer": "Use del d['key'] or d.pop('key').",
+    "correct": true
+  },
+  {
+    "skill": "Python",
+    "question": "How do you remove a key from a dictionary?",
+    "answer": "Use d.remove('key').",
+    "correct": false
+  },
+  {
+    "skill": "Python",
+    "question": "How do you reverse a list in python?",
+    "answer": "You can use list.reverse() method or slicing with [::-1].",
+    "correct": true
+  },
+  {
+    "skill": "Python",
+    "question": "How do you reverse a list in python?",
+    "answer": "Use list.flip() method.",
+    "correct": false
+  },
+  {
+    "skill": "Python",
+    "question": "If `d` is a dictionary, then what does `d.get('name', 'unknown')` do?",
+    "answer": "It returns the value for key 'name' if it exists, otherwise returns 'unknown' as default.",
+    "correct": true
+  },
+  {
+    "skill": "Python",
+    "question": "What is the name of the `@` operator (Example `a @ b`) in Python?",
+    "answer": "It is called the matrix multiplication operator.",
+    "correct": true
+  },
+  {
+    "skill": "Python",
+    "question": "What is the name of the `@` operator (Example `a @ b`) in Python?",
+    "answer": "It is the decorator operator.",
+    "correct": false
+  },
+  {
+    "skill": "SQL",
+    "question": "What does LIMIT 1 do at the end of a SQL statement?",
+    "answer": "It restricts the result set to return only one row.",
+    "correct": true
+  },
+  {
+    "skill": "SQL",
+    "question": "What does LIMIT 1 do at the end of a SQL statement?",
+    "answer": "It limits the query execution time to 1 second.",
+    "correct": false
+  },
+  {
+    "skill": "SQL",
+    "question": "Explain this SQL: SELECT product_name FROM products WHERE cost < 500",
+    "answer": "It selects the product_name column from the products table for all rows where cost is less than 500.",
+    "correct": true
+  },
+  {
+    "skill": "SQL",
+    "question": "What is a view in SQL?",
+    "answer": "A view is a virtual table based on the result of a SELECT query. It does not store data itself but provides a way to simplify complex queries.",
+    "correct": true
+  },
+  {
+    "skill": "SQL",
+    "question": "What is a view in SQL?",
+    "answer": "A view is a backup copy of a table.",
+    "correct": false
+  },
+  {
+    "skill": "SQL",
+    "question": "How do we find the number of records in a table called `products`?",
+    "answer": "Use SELECT COUNT(*) FROM products.",
+    "correct": true
+  },
+  {
+    "skill": "SQL",
+    "question": "What is the difference between WHERE and HAVING in SQL?",
+    "answer": "WHERE filters rows before grouping, HAVING filters groups after aggregation with GROUP BY.",
+    "correct": true
+  },
+  {
+    "skill": "SQL",
+    "question": "What is the difference between WHERE and HAVING in SQL?",
+    "answer": "They are the same thing, just different syntax.",
+    "correct": false
+  },
+  {
+    "skill": "SQL",
+    "question": "Name a window function in SQL",
+    "answer": "ROW_NUMBER(), RANK(), or LAG() are examples of window functions.",
+    "correct": true
+  },
+  {
+    "skill": "System Design",
+    "question": "Give one reason where you would prefer a SQL database over a Vector database",
+    "answer": "When you need ACID transactions and structured relational data with complex joins.",
+    "correct": true
+  },
+  {
+    "skill": "System Design",
+    "question": "Give one reason where you would prefer a SQL database over a Vector database",
+    "answer": "Vector databases are always better, there is no reason to use SQL.",
+    "correct": false
+  },
+  {
+    "skill": "System Design",
+    "question": "RAG requires a vector database. True or False?",
+    "answer": "False. RAG can use other retrieval methods like BM25 or keyword search, though vector databases are commonly used.",
+    "correct": true
+  },
+  {
+    "skill": "System Design",
+    "question": "RAG requires a vector database. True or False?",
+    "answer": "True. RAG cannot work without a vector database.",
+    "correct": false
+  },
+  {
+    "skill": "System Design",
+    "question": "Give one advantage and one disadvantage of chaining multiple prompts?",
+    "answer": "Advantage: Better control and modularity. Disadvantage: Increased latency and token cost.",
+    "correct": true
+  },
+  {
+    "skill": "System Design",
+    "question": "Mention three reasons why we may not want to use the most powerful model?",
+    "answer": "Cost is higher, latency is slower, and it may be overkill for simple tasks.",
+    "correct": true
+  },
+  {
+    "skill": "System Design",
+    "question": "Mention ways to speed up retrieval from a vector database",
+    "answer": "Use approximate nearest neighbor (ANN) algorithms like HNSW, reduce embedding dimensions, or add pre-filtering.",
+    "correct": true
+  },
+  {
+    "skill": "System Design",
+    "question": "Give an overview of Cost - Accuracy - Latency tradeoffs in an AI system",
+    "answer": "More powerful models increase accuracy but cost more and have higher latency. Caching and smaller models reduce cost and latency but may sacrifice accuracy.",
+    "correct": true
+  }
+]

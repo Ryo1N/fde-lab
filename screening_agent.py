@@ -22,11 +22,20 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 
+# Braintrust imports for check_answer
+from braintrust import load_prompt
+from openai import OpenAI
+
 # Agents SDK imports
 from config import settings
 from agents import Agent, Runner, function_tool, set_default_openai_key, SQLiteSession
 from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 from models import JobPost
+
+# Tracing imports
+from agents import set_trace_processors
+from braintrust import init_logger
+from braintrust.wrappers.openai import BraintrustTracingProcessor
 
 # ==============================================================================
 # DATABASE HELPERS
@@ -157,7 +166,7 @@ Follow the following steps exactly:
 4. If skill is not None: hand off to "Skills Evaluator Agent" with the skill name
 5. When Evaluator returns with result, use update_evaluation to save it
 6. REPEAT steps 3-5 until get_next_skill_to_evaluate returns None
-7. When all skills are done, return {"status": "done"}
+7. When all skills are done, return {{"status": "done"}}
 
 IMPORTANT: Keep looping through steps 3-5 until ALL skills are evaluated.
 """
@@ -323,22 +332,25 @@ def get_question(topic: str, difficulty: Literal['easy', 'medium', 'hard']) -> s
 
 
 @function_tool
-def check_answer(skill: str, question: str, answer: str) -> str:
-    """Given a question and an answer for a particular skill, validate if the answer is correct"""
+def check_answer(skill: str, question: str, answer: str) -> dict:
+    """Given a question and an answer for a particular skill, validate if the answer is correct. Returns a dict with 'correct' and 'reasoning' keys."""
     
-    # LangChain components
-    llm = ChatOpenAI(model="gpt-4.1", temperature=0, api_key=settings.OPENAI_API_KEY)
-    parser = PydanticOutputParser(pydantic_object=ValidationResult)
-    prompt = PromptTemplate.from_template(VALIDATION_PROMPT).partial(
-        format_instructions=parser.get_format_instructions()
+    # Load prompt from Braintrust
+    prompt = load_prompt(project="Prodapt", slug="check-answer-prompt-b08b")
+    details = prompt.build(skill=skill, question=question, answer=answer)
+    
+    # Create OpenAI client and call the model
+    client = OpenAI(api_key=settings.OPENAI_API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-5.1-instant", 
+        temperature=0,
+        response_format=details["response_format"],
+        messages=details["messages"]
     )
     
-    # Create and invoke chain
-    chain = prompt | llm | parser
-    result = chain.invoke({"skill": skill, "question": question, "answer": answer})
-    
-    print(f"✅ Evaluation: {result.correct} - {result.reasoning}")
-    return result.model_dump_json()
+    result = json.loads(response.choices[0].message.content)
+    print(f"✅ Evaluation: {result['correct']} - {result['reasoning']}")
+    return result
 
 
 # ==============================================================================
@@ -470,6 +482,7 @@ def get_next_skill_standalone(session_id: str) -> Optional[str]:
 def main():
     """Main function - runs Lab 16 multi-agent interview system"""
     set_default_openai_key(settings.OPENAI_API_KEY)
+    set_trace_processors([BraintrustTracingProcessor(init_logger("Prodapt", api_key=settings.BRAINTRUST_API_KEY))])
     
     job_id = 1
     session_id = "session123"

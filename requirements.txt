@@ -17,3 +17,5 @@ httpx # HTTP Client
 openai # LLM
 PyPDF2 # PDF to Text
 openai-agents==0.6.2
+braintrust-langchain
+langchain-openai
